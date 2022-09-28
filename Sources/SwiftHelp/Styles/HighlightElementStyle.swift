@@ -19,7 +19,7 @@ public struct HighlightHelpElementStyle: HelpElementStyle {
                         || configuration.isPresented {
                         RoundedRectangle(cornerRadius: radius, style: .continuous)
                             .inset(by: -lineWidth / 2)
-                            .stroke(color, lineWidth: lineWidth)
+                            .stroke(.yellow, lineWidth: lineWidth)
                             .saturation(configuration.isPresented ? 0 : 1)
                             .opacity(configuration.isPresented ? 0.3 : 1)
                             .contentShape(Rectangle())

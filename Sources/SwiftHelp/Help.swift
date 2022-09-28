@@ -1,9 +1,7 @@
 import SwiftUI
 
-public protocol Help: Identifiable where ID == String {
-    associatedtype Body: View
+public protocol Help: View, Identifiable where ID == String {
     var title: String { get }
-    @ViewBuilder var body: Body { get }
 }
 
 public struct AnyHelp: Help {
@@ -12,9 +10,9 @@ public struct AnyHelp: Help {
     public var body: AnyView
 
     public init<H: Help>(_ help: H) {
-        self.id = String(describing: help.id)
+        self.id = help.id
         self.title = help.title
-        self.body = { .init(help.body) }()
+        self.body = .init(help.body)
     }
 }
 
