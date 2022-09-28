@@ -1,8 +1,8 @@
 import SwiftUI
 
 extension NavigationLink where Label == Text, Destination == AnyView {
-    public init<S: StringProtocol, H: Help>(_ title: S, help keyPath: KeyPath<HelpValues, H>) {
-        let help = HelpValues()[keyPath: keyPath]
+    public init<S: StringProtocol, H: Help>(_ title: S, help keyPath: KeyPath<HelpContent, H>) {
+        let help = HelpContent()[keyPath: keyPath]
         self.init(title) {
             AnyView(
                 HelpNavigationView(help: help)
@@ -11,8 +11,8 @@ extension NavigationLink where Label == Text, Destination == AnyView {
         }
     }
 
-    public init<H: Help>(_ titleKey: LocalizedStringKey, help keyPath: KeyPath<HelpValues, H>) {
-        let help = HelpValues()[keyPath: keyPath]
+    public init<H: Help>(_ titleKey: LocalizedStringKey, help keyPath: KeyPath<HelpContent, H>) {
+        let help = HelpContent()[keyPath: keyPath]
         self.init(titleKey) {
             AnyView(
                 HelpNavigationView(help: help)
@@ -23,8 +23,8 @@ extension NavigationLink where Label == Text, Destination == AnyView {
 }
 
 extension NavigationLink where Destination == AnyView {
-    public init<H: Help>(help keyPath: KeyPath<HelpValues, H>, @ViewBuilder label: () -> Label) {
-        let help = HelpValues()[keyPath: keyPath]
+    public init<H: Help>(help keyPath: KeyPath<HelpContent, H>, @ViewBuilder label: () -> Label) {
+        let help = HelpContent()[keyPath: keyPath]
         self.init {
             AnyView(
                 HelpNavigationView(help: help)
@@ -37,8 +37,8 @@ extension NavigationLink where Destination == AnyView {
 }
 
 extension NavigationLink where Label == Text, Destination == AnyView {
-    public init<H: Help>(help keyPath: KeyPath<HelpValues, H>) {
-        let help = HelpValues()[keyPath: keyPath]
+    public init<H: Help>(help keyPath: KeyPath<HelpContent, H>) {
+        let help = HelpContent()[keyPath: keyPath]
         self.init {
             AnyView(
                 HelpNavigationView(help: help)

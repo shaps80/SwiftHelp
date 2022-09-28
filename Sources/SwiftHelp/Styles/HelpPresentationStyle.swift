@@ -36,7 +36,7 @@ public struct HelpPresentationConfiguration {
 public struct SheetHelpPresentationStyle: HelpPresentationStyle {
     struct Label: View {
         @State private var show: Bool = false
-        @Environment(\.presentationMode) private var presentation
+        @Environment(\.backportDismiss) private var dismiss
 
         let help: AnyHelp
         let content: AnyView
@@ -47,18 +47,35 @@ public struct SheetHelpPresentationStyle: HelpPresentationStyle {
                     .backport.navigationTitle(help.title)
                     .backport.toolbar {
                         Button {
-                            presentation.wrappedValue.dismiss()
+                            dismiss()
                         } label: {
                             Text("Close")
                         }
                     }
             }
+            .modifier(PresentationModifier())
         }
     }
 
     public init() { }
     public func makeBody(configuration: Configuration) -> some View {
         Label(help: configuration.help, content: configuration.label)
+    }
+}
+
+struct PresentationModifier: ViewModifier {
+    func body(content: Content) -> some View {
+#if os(iOS)
+        if #available(iOS 15, *) {
+            content
+                .backport.presentationDragIndicator(.visible)
+                .backport.presentationDetents([.medium, .large], selection: .constant(.medium), largestUndimmedDetent: nil)
+        } else {
+            content
+        }
+#else
+        content
+#endif
     }
 }
 

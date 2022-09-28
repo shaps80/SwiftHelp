@@ -21,35 +21,12 @@ public struct AnyHelpElementStyle: HelpElementStyle {
 public struct HelpElementConfiguration {
     public var help: AnyHelp
     public var label: AnyView
-
-    init<H: Help, Label: View>(help: H, label: Label) {
-        self.help = .init(help)
-        self.label = .init(label)
-    }
-
-    init<H: Help, Label: View>(help: H, @ViewBuilder label: () -> Label) {
-        self.help = .init(help)
-        self.label = .init(label())
-    }
-}
-
-public struct DefaultHelpElementStyle: HelpElementStyle {
-    public init() { }
-    public func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .backport.overlay {
-                RoundedRectangle(cornerRadius: 13, style: .continuous)
-                    .stroke(Color.yellow, lineWidth: 2)
-            }
-    }
-}
-
-public extension HelpElementStyle where Self == DefaultHelpElementStyle {
-    static var `default`: Self { .init() }
+    public var isVisible: Bool
+    public var isPresented: Bool
 }
 
 private struct HelpElementStyleEnvironmentKey: EnvironmentKey {
-    static let defaultValue = AnyHelpElementStyle(.default)
+    static let defaultValue = AnyHelpElementStyle(.highlight)
 }
 
 public extension EnvironmentValues {
