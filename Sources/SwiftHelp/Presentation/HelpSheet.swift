@@ -12,6 +12,7 @@ public extension View {
 
 private struct HelpSheetModifier<H: Help>: ViewModifier {
     @Environment(\.isHelpVisible) private var isVisible
+
     @Environment(\.helpElementStyle) private var style
     @Environment(\.help) private var selection
 
@@ -29,23 +30,13 @@ private struct HelpSheetModifier<H: Help>: ViewModifier {
                 isPresented: selection.wrappedValue?.id == help.id
             ))
         }
-        .buttonConfiguration(isVisible: isVisible)
+        .buttonStyle(HelpButtonStyle())
     }
 }
 
-private extension View {
-    @ViewBuilder
-    func buttonConfiguration(isVisible: Bool) -> some View {
-        if isVisible {
-            buttonStyle(.plain)
-        } else {
-            buttonStyle(NoButtonStyle())
-        }
-    }
-}
-
-private struct NoButtonStyle: ButtonStyle {
+struct HelpButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
+            .background(Color.primary.opacity(0.0001))
     }
 }

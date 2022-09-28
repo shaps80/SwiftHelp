@@ -12,7 +12,7 @@ public struct HighlightHelpElementStyle: HelpElementStyle {
 
         func body(content: Content) -> some View {
             content
-                .scaleEffect(configuration.isVisible ? 0.95 : 1)
+                .scaleEffect(x: configuration.isVisible ? 0.98 : 1, y: configuration.isVisible ? 0.95 : 1)
                 .allowsHitTesting(!configuration.isVisible)
                 .backport.overlay {
                     if (help.wrappedValue == nil && configuration.isVisible)

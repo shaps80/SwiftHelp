@@ -2,7 +2,7 @@ import SwiftUI
 import SwiftUIBackports
 
 public extension View {
-    func help(isVisible: Bool) -> some View {
+    func help(isVisible: Binding<Bool>) -> some View {
         modifier(HelpVisibilityModifier(isVisible: isVisible))
     }
 }
@@ -10,25 +10,17 @@ public extension View {
 private struct HelpVisibilityModifier: ViewModifier {
     @Environment(\.helpPresentationStyle) private var presentation
     @State private var help: AnyHelp?
-    var isVisible: Bool
+    @Binding var isVisible: Bool
 
     func body(content: Content) -> some View {
         content
             .sheet(item: $help.animation()) { help in
                 presentation.makeBody(configuration: .init(help: help, label: help.body))
             }
-            .environment(\.isHelpVisible, isVisible)
+            .environment(\.helpMode, .init(
+                get: { .init(_isVisible: $isVisible )},
+                set: { isVisible = $0.isVisible })
+            )
             .environment(\.help, $help.animation())
-    }
-}
-
-private struct HelpPresentedEnvironmentKey: EnvironmentKey {
-    static var defaultValue: Bool = false
-}
-
-public extension EnvironmentValues {
-    var isHelpVisible: Bool {
-        get { self[HelpPresentedEnvironmentKey.self] }
-        set { self[HelpPresentedEnvironmentKey.self] = newValue }
     }
 }
