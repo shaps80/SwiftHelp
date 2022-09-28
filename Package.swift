@@ -15,7 +15,13 @@ let package = Package(
             targets: ["SwiftHelp"]
         ),
     ],
+    dependencies: [
+        .package(url: "https://github.com/shaps80/SwiftUIBackports", .upToNextMajor(from: "1.0.0"))
+    ],
     targets: [
-        .target(name: "SwiftHelp"),
+        .target(
+            name: "SwiftHelp",
+            dependencies: ["SwiftUIBackports"]
+        ),
     ]
 )

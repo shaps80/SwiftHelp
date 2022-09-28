@@ -5,3 +5,19 @@
 # SwiftHelp
 
 A SwiftUI library for building interactive help systems in your apps.
+
+## Sponsor
+
+Building useful libraries like these, takes time away from my family. I build these tools in my spare time because I feel its important to give back to the community. Please consider [Sponsoring](https://github.com/sponsors/shaps80) me as it helps keep me working on useful libraries like these 😬
+
+You can also give me a follow and a 'thanks' anytime.
+
+[![Twitter](https://img.shields.io/badge/Twitter-@shaps-4AC71B)](http://twitter.com/shaps)
+
+## Installation
+
+You can install manually (by copying the files in the `Sources` directory) or using Swift Package Manager (**preferred**)
+
+To install using Swift Package Manager, add this to the `dependencies` section of your `Package.swift` file:
+
+`.package(url: "https://github.com/shaps80/SwiftHelp.git", .upToNextMinor(from: "1.0.0"))`
