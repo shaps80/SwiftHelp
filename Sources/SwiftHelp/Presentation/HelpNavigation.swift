@@ -21,6 +21,24 @@ extension NavigationLink where Label == Text, Destination == AnyView {
             )
         }
     }
+
+    public init<S: StringProtocol, H: Help>(_ title: S, help: H) {
+        self.init(title) {
+            AnyView(
+                HelpNavigationView(help: .init(help))
+                    .helpPresentationStyle(.plain)
+            )
+        }
+    }
+
+    public init<H: Help>(_ titleKey: LocalizedStringKey, help: H) {
+        self.init(titleKey) {
+            AnyView(
+                HelpNavigationView(help: .init(help))
+                    .helpPresentationStyle(.plain)
+            )
+        }
+    }
 }
 
 extension NavigationLink where Destination == AnyView {
@@ -35,11 +53,30 @@ extension NavigationLink where Destination == AnyView {
             label()
         }
     }
+
+    public init<H: Help>(help: H, @ViewBuilder label: () -> Label) {
+        self.init {
+            AnyView(
+                HelpNavigationView(help: .init(help))
+                    .helpPresentationStyle(.plain)
+            )
+        } label: {
+            label()
+        }
+    }
 }
 
 extension NavigationLink where Label == Text, Destination == AnyView {
     public init<H: Help>(help keyPath: KeyPath<HelpContent, H>) {
         let help = HelpContent[keyPath]
+        self.init {
+            AnyView(HelpNavigationView(help: .init(help)))
+        } label: {
+            Text(help.title)
+        }
+    }
+
+    public init<H: Help>(help: H) {
         self.init {
             AnyView(HelpNavigationView(help: .init(help)))
         } label: {
