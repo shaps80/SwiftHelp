@@ -8,7 +8,9 @@ public struct AnyHelp: Help {
     public var id: String
     public var title: String
     public var body: AnyView
+}
 
+extension AnyHelp {
     public init<H: Help>(_ help: H) {
         self.id = help.id
         self.title = help.title

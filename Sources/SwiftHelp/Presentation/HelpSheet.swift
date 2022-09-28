@@ -2,7 +2,7 @@ import SwiftUI
 
 public extension View {
     func help<H: Help>(_ keyPath: KeyPath<HelpContent, H>) -> some View {
-        modifier(HelpSheetModifier(help: HelpContent()[keyPath: keyPath]))
+        modifier(HelpSheetModifier(help: HelpContent[keyPath]))
     }
 
     func help<H: Help>(_ help: H) -> some View {
