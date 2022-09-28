@@ -18,7 +18,9 @@ private struct HelpSheetModifier<H: Help>: ViewModifier {
     let help: H
     func body(content: Content) -> some View {
         Button {
-            selection.wrappedValue = .init(help)
+            if isVisible {
+                selection.wrappedValue = .init(help)
+            }
         } label: {
             style.makeBody(configuration: .init(
                 help: .init(help),
@@ -27,6 +29,23 @@ private struct HelpSheetModifier<H: Help>: ViewModifier {
                 isPresented: selection.wrappedValue?.id == help.id
             ))
         }
-        .buttonStyle(.plain)
+        .buttonConfiguration(isVisible: isVisible)
+    }
+}
+
+private extension View {
+    @ViewBuilder
+    func buttonConfiguration(isVisible: Bool) -> some View {
+        if isVisible {
+            buttonStyle(.plain)
+        } else {
+            buttonStyle(NoButtonStyle())
+        }
+    }
+}
+
+private struct NoButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
     }
 }
